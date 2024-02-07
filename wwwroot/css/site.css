@@ -1,0 +1,301 @@
+* {
+    margin: 0%;
+    padding: 0%;
+}
+
+html {
+    font-size: 100%;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 100%;
+    }
+}
+
+body {
+    height: 100vh;
+    min-height: 100vh;
+    overflow: unset;
+    overflow-y: hidden;
+}
+
+@media (max-width: 768px){
+    body {
+        overflow-y: auto;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(203, 203, 203);
+    border-radius: 30px;
+}
+
+.cssLabel_baseStyle {
+    font-weight: 500;
+}
+
+.cssInput_baseStyle,
+.cssTextArea_baseStyle {
+    border: 0px;
+    border-radius: 5px;
+    height: 3.5vh;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .cssInput_baseStyle,
+    .cssTextArea_baseStyle {
+        width: 100%;
+    }
+}
+
+.cssTextArea_baseStyle{
+    height: fit-content;
+}
+
+.cssInput_baseStyle {
+   max-height: 3.5vh;
+}
+
+.cssSpan_Error{
+    margin-top: -10px;
+}
+
+.cssDiv_container,
+.cssDiv_loginBtns,
+.cssDiv_PersonalDetailsBtns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cssDiv_container {
+    padding-top: 60px;
+    height: 100vh;
+    width: 100%;
+    background-color: rgb(236, 245, 255);
+}
+
+.cssDiv_login,
+.cssDiv_PersonalDetails,
+.cssDiv_ChnagePassword,
+.cssDiv_ManageUser {
+    padding: 15px;
+    height: fit-content;
+    border: 0px;
+    border-radius: 15px;
+    background-color: rgb(180, 215, 255);
+    min-width: 380px;
+}
+
+.cssNav_Header {
+    position: fixed;
+    width: 100vw;
+    z-index: 2;
+}
+
+.cssSpan_Error{
+    display: none;
+    font-size: 13px;
+    color: red;
+    margin-top: 5px;
+}
+
+/* ----------------------Login Page--------------------- */
+.cssDiv_login {
+    width: 30%;
+}
+
+    .cssDiv_login .cssDiv_loginHead,
+    .cssDiv_PersonalDetailsHead,
+    .cssDiv_ChangePasswordHead,
+    .cssDiv_ManageUserHead {
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+.cssForm_login,
+.cssForm_PersonalDetails,
+.cssForm_ChangePassword,
+.cssForm_ManageUser {
+    padding: 15px 25px 15px 25px;
+    background-color: rgb(236, 245, 255);
+    border-radius: 10px;
+}
+
+.cssDiv_loginBtns,
+.cssDiv_PersonalDetailsBtns,
+.cssDiv_ChangePasswordBtns,
+.cssDiv_ManageUserBtns {
+    margin-top: 25px;
+    gap: 10px;
+}
+
+.cssDiv_SubContainer {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .cssDiv_SubContainer{
+        padding-top: 83%;
+        padding-bottom : 10px;
+    }
+}
+
+.cssButton {
+    width: 100px;
+    height: 38px;
+}
+
+/* --------------------Personal Details----------------- */
+
+.cssDiv_HeadOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+    .cssDiv_HeadOptions a {
+        text-decoration: none;
+    }
+
+@media (max-width: 768px){
+    .cssDiv_HeadOptions {
+        align-items: start;
+    }
+}
+
+.cssDiv_PersonalDetails {
+    width: 85%;
+    padding: 1.3vh;
+}
+
+    .cssDiv_PersonalDetails label span{
+        color: red;
+    }
+
+.cssDiv_ImageContainer {
+    margin: 0;
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .cssDiv_ImageContainer {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+}
+
+.cssInput_FileShow {
+    border-radius: 10px;
+    height: 100%;
+    width: auto;
+    max-height: 250px;
+    max-width: 230px;
+}
+
+.cssDiv_FileInput {
+    display: flex;
+    align-items: end;
+    padding: 0%;
+    gap: 20px;
+}
+
+    .cssDiv_FileInput input{
+        border-radius: 5px;
+        border: none;
+    }
+
+/* ---------------------Change Password------------------ */
+    
+.cssDiv_ChnagePassword {
+        width: 40%;
+}
+
+.cssDiv_ChangePasswordBtns {
+    display: flex;
+    justify-content: end;
+}
+
+/* -----------------------Manage User--------------------- */
+
+.cssDiv_ManageUser {
+    width: 90%;
+    max-height: 96%;
+}
+
+.cssForm_ManageUser {
+    height: 93%;
+    max-height: 93%;
+    overflow-y: auto;
+    padding: 0px 12px 0px 12px;
+}
+
+.cssDiv_ManageUserBtns {
+    margin-top: 0%;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: end;
+}
+
+.cssDiv_ManageUser .dx-datagrid-headers {
+    color: #4d4d4d !important;
+    font-size: larger !important;
+    font-weight: 700 !important;
+    background-color: #ebcb91;
+}
+
+.cssDiv_ManageUser .dx-datagrid-pager {
+    padding-left: 10px !important;
+    padding-right: 5px !important;
+    background-color: #ffe4b2;
+}
+
+.cssDiv_ManageUser .dx-row {
+    font-size: medium;
+}
+
+.cssDiv_Modal {
+    border-radius: 10px;
+}
+
+.cssDiv_ModalHeader,
+.cssDiv_ModalFooter {
+    background-color: rgb(180, 215, 255);
+}
+
+.cssDiv_ModalHeader {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.cssDiv_ModalFooter {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.cssDiv_ModalBody {
+    background-color: rgb(236, 245, 255);
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.cssDiv_ModalBody label{
+    padding: 0;
+    margin-bottom: 5px;
+}

@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SkillSheetManager</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    @* Uncomment to use the HtmlEditor control *@
+    @* <script src="https://unpkg.com/devextreme-quill/dist/dx-quill.min.js"></script> *@
+
+    @* Uncomment to use the Gantt control *@
+    @*<link href="~/css/devextreme/dx-gantt.css" rel="stylesheet" />*@
+
+    @* Uncomment to use the Diagram control *@
+    @*<link href="~/css/devextreme/dx-diagram.css" rel="stylesheet" />*@
+
+    <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+
+    @* Uncomment to use the Gantt control *@
+    @*<script src="~/js/devextreme/dx-gantt.js"></script>*@
+
+    @* Uncomment to use the Diagram control *@
+    @*<script src="~/js/devextreme/dx-diagram.js"></script>*@
+
+    <!-- Remove the jQuery links below -->
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    </environment>
+
+    @* Uncomment to use Globalize for localization *@
+    @*<script src="~/js/devextreme/cldr.js"></script>*@
+    @*<script src="~/js/devextreme/cldr/event.js"></script>*@
+    @*<script src="~/js/devextreme/cldr/supplemental.js"></script>*@
+    @*<script src="~/js/devextreme/cldr/unresolved.js"></script>*@
+    @*<script src="~/js/devextreme/globalize.js"></script>*@
+    @*<script src="~/js/devextreme/globalize/message.js"></script>*@
+    @*<script src="~/js/devextreme/globalize/number.js"></script>*@
+    @*<script src="~/js/devextreme/globalize/currency.js"></script>*@
+    @*<script src="~/js/devextreme/globalize/date.js"></script>*@
+
+    @* Uncomment to enable client-side export *@
+    @*<script src="~/js/devextreme/jszip.js"></script>*@
+
+    <script src="~/js/devextreme/dx.all.js"></script>
+
+    @* Uncomment to provide geo-data for the VectorMap control *@
+    @*<script src="~/js/devextreme/vectormap-data/world.js"></script>*@
+
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow cssNav_Header">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h4>SkillSheetManager</h4></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse justify-content-end">
+                    <div class="cssDiv_HeadOptions">
+                        @RenderSection("NavLinks", required: false)
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="cssDiv_container">
+        @RenderBody()
+    </div>
+
+    <!--
+    <script src="~/lib//jquery/dist/jquery.min.js"></script>
+    -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/Validations.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

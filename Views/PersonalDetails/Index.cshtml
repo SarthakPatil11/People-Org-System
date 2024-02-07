@@ -1,0 +1,167 @@
+﻿@model SkillSheetManager.Models.ViewModel.UserDetailsViewModel
+
+@{
+    ViewData["Title"] = "Personal Details";
+    var UserDetails = ViewData.Model;
+}
+
+@section NavLinks{
+    @Html.ActionLink("Logout", "Logout", "Auth", new { }, new { id = "a_Logout" })
+    @Html.ActionLink("Change Password", "ChangePassword", "Auth", new { }, new { id = "a_ChangePasword" })
+}
+
+<div class="cssDiv_SubContainer">
+    <div class="cssDiv_PersonalDetails">
+        <div class="cssDiv_PersonalDetailsHead">
+            <h4>Personal Details</h4>
+        </div>
+        <form asp-controller="PersonalDetails" asp-action="CreateOrUpdate" method="post" enctype="multipart/form-data" onsubmit="js_ValidateFormPersonalDetails(event)" class="cssForm_PersonalDetails">
+            @{
+                if (ViewBag.responseData != null) //To check there is the response data.
+                {
+                    var objResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(ViewBag.responseData);
+                    <div class="alert alert-@objResponse.Severity alert-dismissible fade show" role="alert">
+                        @if (objResponse.ErrorCode != 0) //To check the error code is zero.
+                        {
+                            <strong>Error @objResponse.ErrorCode :</strong>
+                        }
+                        @objResponse.ErrorMessage
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+            }
+            <div class="form-group row">
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <label asp-for="UserName" class="cssLabel_baseStyle mb-2">Name<span>*</span>:</label>
+                        </div>
+                        <div class="col-12 col-md-8 col-lg-8">
+                            <input asp-for="UserName" class="form-control cssInput_baseStyle" id="input_Name" placeholder="Enter name" required>
+                            <span asp-validation-for="UserName" class="text-danger fs-6"></span>
+                            <span id="span_Name" class="text-danger cssSpan_Error"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="cssLabel_baseStyle col-12 col-md-4 col-lg-4">
+                            <label asp-for="Sex" class="cssLabel_baseStyle mb-2">Sex<span>*</span>:</label>
+                        </div>
+                        <div class="col-12 col-md-8 col-lg-8">
+                            <select asp-for="Sex" id="select_sex" class="form-select cssInput_baseStyle" required>
+                                <option disabled selected>--Select Sex--</option>
+                                <option value="1">Male</option>
+                                <option value="0">Female</option>
+                            </select>
+                            <span asp-validation-for="Sex" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <label asp-for="DateOfBirth" class="cssLabel_baseStyle mb-2">Date of Birth<span>*</span>:</label>
+                        </div>
+                        <div class="col-12 col-md-8 col-lg-8">
+                            <input asp-for="DateOfBirth" type="date" id="input_DateOfBirth" class="form-control cssInput_baseStyle" required />
+                            <span asp-validation-for="DateOfBirth" class="text-danger fs-6"></span>
+                            <span id="span_DateOfBirth" class="text-danger cssSpan_Error"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <label asp-for="JoiningDate" class="cssLabel_baseStyle mb-2">Joining Date<span>*</span>:</label>
+                        </div>
+                        <div class="col-12 col-md-8 col-lg-8">
+                            <input asp-for="JoiningDate" type="date" id="input_JoiningDate" class="form-control cssInput_baseStyle" required />
+                            <span asp-validation-for="JoiningDate" class="text-danger fs-6"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <label asp-for="WorkedInJapan" class="cssLabel_baseStyle mb-2">Worked in Japan:</label>
+                        </div>
+                        <div class="col-12 col-md-8 col-lg-8">
+                            <select asp-for="WorkedInJapan" id="select_WorkedInJapan" class="form-select cssInput_baseStyle">
+                                <option disabled selected>--Select choice--</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row mb-4">
+                <div class="col-12 col-md-2 col-lg-2">
+                    <label asp-for="Qualification" class="cssLabel_baseStyle mb-2">Qualification:</label>
+                </div>
+                <div class="col-12 col-md-10 col-lg-10">
+                    <textarea asp-for="Qualification" id="textarea_qualification" class="form-control cssTextArea_baseStyle" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-12 col-md-2 col-lg-2">
+                    <label class="cssLabel_baseStyle">Computer Skills</label>
+                </div>
+
+                <div class="col-12 col-md-10 col-lg-10">
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-2 col-lg-2">
+                            <label asp-for="Languages" class="cssLabel_baseStyle mb-2">Languages:</label>
+                        </div>
+                        <div class="col-12 col-md-10 col-lg-10">
+                            <input asp-for="Languages" id="input_Language" class="form-control cssInput_baseStyle">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-2 col-lg-2">
+                            <label asp-for="Database" class="cssLabel_baseStyle mb-2">Database:</label>
+                        </div>
+                        <div class="col-12 col-md-10 col-lg-10">
+                            <input asp-for="Database" id="input_Database" class="form-control cssInput_baseStyle">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row mb-4">
+                <div class="col-12 col-md-2 col-lg-2">
+                    <label asp-for="PhotoName" class="cssLabel_baseStyle mb-2">Photo:</label>
+                </div>
+
+                <div class="col-12 col-md-10 col-lg-10">
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-4 cssDiv_ImageContainer">
+                            @{
+                                if (UserDetails.PhotoName != string.Empty) //To check the photoname is not empty.
+                                {
+                                    <img id="input_ImageBox" type="image" src="@UserDetails.PhotoName" class="cssInput_FileShow">
+                                }
+                                else //If photo is empty.
+                                {
+                                    <img id="input_ImageBox" type="image" src="../img/ProfileImage.png" class="cssInput_FileShow"> 
+                                }
+                            }
+                        </div>
+
+                        <div class="col-12 col-md-8 col-lg-8 cssDiv_FileInput">
+                            <input asp-for="Photo" class="form-control" type="file" accept=".png, .jpg, .jpeg" id="input_file" onchange="js_GetFile('input_file', 'input_ImageBox', 'span_file')" style="margin-bottom: 0;">
+                            <span class="cssSpan_Error" id="span_file"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cssDiv_PersonalDetailsBtns">
+                <button type="submit" id="btn_Submit" class="btn btn-success cssButton">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/PersonalDetails.js" asp-append-version="true"></script>
+}

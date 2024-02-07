@@ -1,0 +1,203 @@
+﻿@model SkillSheetManager.Models.DBEntities.User
+
+@{
+    ViewData["Title"] = "Manage User";
+}
+
+@section NavLinks{
+    @Html.ActionLink("Logout", "Logout", "Auth", new { }, new { id = "a_Logout" })
+    @Html.ActionLink("Change Password", "ChangePassword", "Auth", new { }, new { id = "a_ChangePasword" })
+}
+
+<!--Add Modal -->
+<div class="modal fade" id="div_AddModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content cssDiv_Modal">
+            <div class="modal-header cssDiv_ModalHeader">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add New User</h5>
+                <button id="button_CloseAddModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body cssDiv_ModalBody">
+                <div class="row mb-3">
+                    <label for="input_AddUserName" class="cssLabel_baseStyle col-4">User Name:</label>
+                    <input type="text" class="cssInput_baseStyle form-control col-8" id="input_AddUserName"
+                           placeholder="Username">
+                    <span class="cssSpan_Error" id="span_AddUserName"></span>
+                </div>
+                <div class="row mb-3">
+                    <label for="input_AddPassword" class="cssLabel_baseStyle col-4">Password:</label>
+                    <input type="password" class="cssInput_baseStyle form-control col-8" id="input_AddPassword"
+                           placeholder="Password">
+                    <span class="cssSpan_Error" id="span_AddPassword"></span>
+                </div>
+                <div class="row mb-3">
+                    <label for="input_AddEmail" class="cssLabel_baseStyle col-4">Email:</label>
+                    <input type="email" class="cssInput_baseStyle form-control col-8" id="input_AddEmail"
+                           placeholder="Email" style="margin-bottom: 0;">
+                    <span class="cssSpan_Error" id="span_AddEmail"></span>
+                </div>
+            </div>
+
+            <div class="modal-footer cssDiv_ModalFooter">
+                <button type="button" class="btn btn-primary" onclick="js_CreateUser()">Add</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal -->
+<div class="modal fade" id="div_EditModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content cssDiv_Modal">
+            <div class="modal-header cssDiv_ModalHeader">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Existing User</h5>
+                <button id="button_CloseEditModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body cssDiv_ModalBody">
+                <div class="row mb-3">
+                    <label for="input_EditUserName" class="cssLabel_baseStyle col-4">User Name:</label>
+                    <input type="text" class="cssInput_baseStyle form-control col-8" id="input_EditUserName"
+                           placeholder="Username">
+                    <span class="cssSpan_Error" id="span_EditUserName"></span>
+                </div>
+                <div class="row mb-3">
+                    <label for="input_EditPassword" class="cssLabel_baseStyle col-4">Password:</label>
+                    <input type="password" class="cssInput_baseStyle form-control col-8" id="input_EditPassword"
+                           placeholder="Password">
+                    <span class="cssSpan_Error" id="span_EditPassword"></span>
+                </div>
+                <div class="row mb-3">
+                    <label for="input_EditEmail" class="cssLabel_baseStyle col-4">Email:</label>
+                    <input type="email" class="cssInput_baseStyle form-control col-8" id="input_EditEmail"
+                           placeholder="Email" style="margin-bottom: 0;">
+                    <span class="cssSpan_Error" id="span_EditEmail"></span>
+                </div>
+            </div>
+
+            <div class="modal-footer cssDiv_ModalFooter">
+                <button id="button_ModalEditUser" type="button" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal -->
+<div class="modal fade" id="div_DeleteModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content cssDiv_Modal">
+            <div class="modal-header cssDiv_ModalHeader">
+                <h5 class="modal-title" id="exampleModalLongTitle">Delete User</h5>
+                <button id="button_CloseDeleteModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body cssDiv_ModalBody">
+                <h6 id="h6_DeleteMessage">Are you sure you want to delete selected user(s)?</h6>
+            </div>
+
+            <div class="modal-footer cssDiv_ModalFooter">
+                <button type="button" class="btn btn-primary" onclick="js_DeleteUser()">OK</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cssDiv_ManageUser">
+    <div class="cssDiv_ManageUserHead">
+        <h4>Manage User</h4>
+        <div class="cssDiv_ManageUserBtns">
+            <button id="button_AddUser" class="btn btn-success cssButton text-light" data-bs-toggle="modal" data-bs-target="#div_AddModal">Add</button>
+            <button id="button_EditUser" class="btn btn-warning cssButton" data-bs-toggle="modal" onclick="js_EditUser()" disabled>Edit</button>
+            <button id="button_DeleteUser" type="button" class="btn btn-danger cssButton text-light" data-bs-toggle="modal"
+                    data-bs-target="#div_DeleteModal" disabled>
+                Delete
+            </button>
+        </div>
+    </div>
+    <form class="cssForm_ManageUser">
+        <div class="form-group row">
+            @(
+                Html.DevExtreme().DataGrid<SkillSheetManager.Models.DBEntities.User>()
+                    .ID("gridContainer")
+                    .ShowBorders(true)
+                    .DataSource(d => d.Mvc()
+                        .Controller("ManageUsers")
+                        .LoadAction("GetUsers")
+                        .Key("UserID")
+                    )
+                    .RemoteOperations(options =>
+                    {
+                        options.Paging(true);
+                        options.Sorting(true);
+                        options.Filtering(true);
+                    })
+                    .Selection(s =>
+                    {
+                        s.Mode(SelectionMode.Multiple);
+                        s.ShowCheckBoxesMode(GridSelectionShowCheckBoxesMode.Always);
+                    })
+                    .Paging(paging =>
+                    {
+                        paging.PageSize(10);
+                    })
+                    .Pager(pager =>
+                    {
+                        pager.Visible(true);
+                        pager.DisplayMode(GridPagerDisplayMode.Full);
+                        pager.ShowPageSizeSelector(true);
+                        pager.AllowedPageSizes(new JS("[10, 15]"));
+                        pager.ShowInfo(true);
+                        pager.ShowNavigationButtons(true);
+                    })
+                    .FilterRow(filterRow =>
+                    {
+                        filterRow.Visible(true);
+                    })
+                    .Columns(c =>
+                    {
+                        c.AddFor(m => m.UserName);
+                        c.AddFor(m => m.Email);
+                        c.AddFor(m => m.GroupName);
+                    })
+                    .OnSelectionChanged("selection_changed")
+                    .Width("100%")
+            )
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(window).resize(function () {
+            if (window.innerWidth <= 540) {
+                $('#button_AddUser').html('<i class="bi bi-plus-square"></i>');
+                $('#button_AddUser').css({ "width": "fit-content" });
+
+                $('#button_EditUser').html('<i class="bi bi-pencil-square"></i>');
+                $('#button_EditUser').css({ "width": "fit-content" });
+
+                $('#button_DeleteUser').html('<i class="bi bi-trash3"></i>');
+                $('#button_DeleteUser').css({ "width": "fit-content" });
+
+            } else if (window.innerWidth > 540) {
+                $('#button_AddUser').text('Add');
+                $('#button_AddUser').css({ "width": "" });
+
+                $('#button_EditUser').text('Edit');
+                $('#button_EditUser').css({ "width": "" });
+
+                $('#button_DeleteUser').text('Delete');
+                $('#button_DeleteUser').css({ "width": "" });
+            }
+        }).resize();
+    </script>
+    <script src="~/js/ManageUser.js" asp-append-version="true"></script>
+}

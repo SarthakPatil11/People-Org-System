@@ -1,0 +1,58 @@
+﻿@model SkillSheetManager.Models.ViewModel.UserViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="cssDiv_login">
+    <div class="cssDiv_loginHead">
+        <h3>LOGIN</h3>
+    </div>
+    <form asp-controller="Auth" asp-action="Login" method="post" onsubmit="js_ValidateFormLogin(event)" class="cssForm_login">
+        @{
+            if (ViewBag.responseData != null) //To check there is the response data.
+            {
+                var objResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(ViewBag.responseData);
+                <div id="div_Message" class="alert alert-@objResponse.Severity alert-dismissible fade show" aria-role="alert">
+                    @if (objResponse.ErrorCode != 0) //To check the error code is zero.
+                    {
+                        <strong>Error @objResponse.ErrorCode :</strong>
+                    }
+                    @objResponse.ErrorMessage
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+        }
+        <div class="form-group mb-3">
+            <label asp-for="GroupName" class="cssLabel_baseStyle mb-2">Group Name:</label>
+            <select asp-for="GroupName" id="select_GroupName" class="form-select cssInput_baseStyle" onchange="js_GetUsers()" required>
+                <option selected hidden>--Select Group--</option>
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="UserName" class="cssLabel_baseStyle mb-2">User Name:</label>
+            <select asp-for="UserName" id="select_UserName" class="form-select cssInput_baseStyle" placeholder="--Select UserNames--" required>
+                <option selected hidden>--Select UserNames--</option>
+                <option disabled>Fetching UserNames</option>
+            </select>
+            <span asp-validation-for="UserName" class="text-danger cssSpan_Error"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Password" class="cssLabel_baseStyle mb-2">Password:</label>
+            <input type="password" asp-for="Password" class="cssInput_baseStyle form-control" id="input_Password" placeholder="Password" required>
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <span id="span_Password" class="text-danger cssSpan_Error"></span>
+        </div>
+        <div class="cssDiv_loginBtns">
+            <button type="submit" class="btn btn-success cssButton">Submit</button>
+            <input type="reset" class="btn btn-secondary cssButton" value="Reset">
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/Auth.js" asp-append-version="true"></script>
+}
